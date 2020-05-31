@@ -35,7 +35,7 @@ end
     songs.each {|song| puts song.name}
   end
  end
-end
+
 #class Artist
  # @@all = []
   #attr_accessor :name, :songs
