@@ -1,31 +1,29 @@
-class Song 
-  attr_accessor :name, :artist 
- @@all = []
+class Song
+  attr_accessor :name, :artist
+  @@all = []
+
   def initialize(name)
-    @name=name
+    @name = name
+    save
+  end
+
+  def save
     @@all << self
- end 
- def self.all 
-    @@all 
   end
-  def print_songs
-    Song.all.select {|song| song.artist == self}
+
+  def self.all
+    @@all
   end
-  #def add_song(song)
-   # song.artist = self
-    #@@all << song
-#end
-def self.new_by_filename(filename)
-  filename.split(" - ")[1]
+
+  def self.new_by_filename(filename)
+    artist, song = filename.split(" - ")
+    new_song = self.new(song)
+    new_song.artist_name = artist
+    new_song
+  end
+
+  def artist_name=(name)
+    self.artist = Artist.find_or_create_by_name(name)
+    artist.add_song(self)
+  end
 end
-def artist_name(name)
- if Artist.all.detect do |artist| if artist.name == name
-  artist
-else 
-  self.artist = name
-end
-end
-end
-end
-end
-#import method: Song.new_by_filename(some_filename). This will send us to the Song class, specifically Song.new_by_filename and handle the creation of Song instances and their associated Artist instances.
